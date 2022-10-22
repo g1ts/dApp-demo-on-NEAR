@@ -1,0 +1,39 @@
+{
+  "name": "dapp-demo-on-near",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "nodemon --watch contract -e ts --exec \"npm run start\"",
+    "start": "npm run deploy:dev && echo The app is starting! && npm run start:frontend",
+    "start:frontend": "env-cmd -f ./neardev/dev-account.env parcel frontend/src/index.html --open",
+    "deploy:dev": "npm run build:contract && npm run deploy:dev:contract",
+    "deploy:dev:contract": "near dev-deploy",
+    "deploy:frontend": "gh-pages -d frontend/dist",
+    "deploy:contract": "",
+    "build": "npm run build:contract && npm run build:frontend",
+    "build:frontend": "parcel build frontend/src/index.html --dist-dir frontend/dist/",
+    "build:contract": "cd contract && npm run build && mkdir -p ../out && rm -f ../out/main.wasm && cp ./build/release/tic-tac-toe_contract.wasm ../out/main.wasm",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/g1ts/dApp-demo-on-NEAR.git"
+  },
+  "author": "g1ts",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/g1ts/dApp-demo-on-NEAR/issues"
+  },
+  "homepage": "https://github.com/g1ts/dApp-demo-on-NEAR#readme",
+  "devDependencies": {
+    "buffer": "^6.0.3",
+    "env-cmd": "^10.1.0",
+    "gh-pages": "^4.0.0",
+    "nodemon": "^2.0.20",
+    "parcel": "^2.7.0",
+    "process": "^0.11.10"
+  },
+  "dependencies": {
+    "near-api-js": "^1.1.0"
+  }
+}
