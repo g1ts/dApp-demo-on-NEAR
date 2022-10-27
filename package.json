@@ -5,13 +5,13 @@
   "scripts": {
     "dev": "nodemon --watch contract -e ts --exec \"npm run start\"",
     "start": "npm run deploy:dev && echo The app is starting! && npm run start:frontend",
-    "start:frontend": "env-cmd -f ./neardev/dev-account.env parcel frontend/src/index.html --open",
+    "start:frontend": "env-cmd -f ./neardev/dev-account.env parcel frontend/src/index.html --open --dist-dir frontend/dist/",
     "deploy:dev": "npm run build:contract && npm run deploy:dev:contract",
     "deploy:dev:contract": "near dev-deploy",
-    "deploy:frontend": "gh-pages -d frontend/dist",
+    "deploy:frontend": "gh-pages -d frontend/build",
     "deploy:contract": "",
     "build": "npm run build:contract && npm run build:frontend",
-    "build:frontend": "parcel build frontend/src/index.html --dist-dir frontend/dist/",
+    "build:frontend": "rm -rf frontend/build/ && env-cmd -f ./neardev/dev-account.env parcel build frontend/src/index.html --public-url ./ --dist-dir frontend/build/",
     "build:contract": "cd contract && npm run build && mkdir -p ../out && rm -f ../out/main.wasm && cp ./build/release/tic-tac-toe_contract.wasm ../out/main.wasm",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

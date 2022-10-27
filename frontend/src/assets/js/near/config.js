@@ -3,7 +3,6 @@ const CONTRACT_NAME = process.env.CONTRACT_NAME || 'change_this_account'; /* TOD
 
 function getConfig (env) {
   switch (env) {
-    case 'production':
     case 'mainnet':
       return {
         networkId: 'mainnet',
@@ -12,6 +11,7 @@ function getConfig (env) {
         walletUrl: 'https://wallet.near.org',
         helperUrl: 'https://helper.mainnet.near.org'
       }
+    case 'production':
     case 'development':
     case 'testnet':
       return {
