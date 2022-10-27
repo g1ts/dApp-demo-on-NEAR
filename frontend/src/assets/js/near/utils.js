@@ -18,9 +18,9 @@ export async function initContract() {
   // Initializing our contract APIs by contract name and configuration
   window.contract = await new Contract(window.walletConnection.account(), nearConfig.contractName, {
     // View methods are read only. They don't modify the state, but usually return some value.
-    viewMethods: ['get_value'],
+    viewMethods: ['getNewGames', 'getGame', 'getGameBoard', 'getActiveGame'],
     // Change methods can modify the state. But you don't receive the returned value when called.
-    changeMethods: ['set_value'],
+    changeMethods: ['createGame', 'joinGame', 'turn', 'surrender'],
   })
 }
 
@@ -39,16 +39,43 @@ export async function login() {
   await window.walletConnection.requestSignIn({ contractId: nearConfig.contractName })
 }
 
-export async function getValue() {
-  let value = await window.contract.get_value({ args: {} })
+
+export async function getNewGames() {
+  let games = await window.contract.getNewGames({})
     .catch(err => errorHelper(err))
-  return value;
+  return games;
+}
+export async function getMyActiveGame() {
+  let games = await window.contract.getActiveGame({ accountId: window.accountId })
+    .catch(err => errorHelper(err))
+  return games;
+}
+export async function getGame(id) {
+  let game = await window.contract.getGame({ id })
+    .catch(err => errorHelper(err))
+  return game;
 }
 
-export async function setValue(value) {
-  value = parseInt(value)
-  await window.contract.set_value({ args: { value } })
+export async function createGame() {
+  let gameId = await window.contract.createGame({})
+    .catch(err => errorHelper(err))
+  return gameId;
 }
+export async function joinGame(id) {
+  let activePlayer = await window.contract.joinGame({ id: parseInt(id) })
+    .catch(err => errorHelper(err))
+  return activePlayer;
+}
+export async function turn({ x, y, id }) {
+  let win = await window.contract.turn({ id: parseInt(id), x, y })
+    .catch(err => errorHelper(err))
+  return win;
+}
+export async function surrender() {
+  return await window.contract.surrender()
+    .catch(err => errorHelper(err))
+}
+
 
 
 function errorHelper(err) {

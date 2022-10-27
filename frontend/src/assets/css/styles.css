@@ -1,0 +1,54 @@
+#board {
+    width: 300px;
+    height: 300px;
+    margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    pointer-events: none;
+    background: #ddd;
+}
+
+#board.my-turn {
+    pointer-events: inherit;
+    background: #fff;
+}
+
+.board-row {
+    display: flex;
+    justify-content: space-around;
+    height: 33%;
+}
+
+.board-cell {
+    border: 1px solid black;
+    width: 33%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-origin: content-box;
+    padding: 4%;
+}
+
+.board-cell.empty:hover {
+    cursor: pointer;
+    box-shadow: 0px 0px 14px -6px rgba(34, 60, 80, 0.7) inset;
+    background-image: url('../img/cross.svg');
+    opacity: 0.3;
+}
+
+.board-cell.cross {
+    background-image: url('../img/cross.svg');
+}
+
+.board-cell.circle {
+    background-image: url('../img/circle.svg');
+}
+
+
+#game-ui-title {
+    text-align: center;
+}
